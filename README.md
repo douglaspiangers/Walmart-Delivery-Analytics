@@ -118,11 +118,11 @@ walmart-delivery-analytics/
 
 ## Power BI Dashboard
 
-The file `dashboard/walmart-delivery-analytics.pbix` has the full interactive report — 5 pages covering executive overview, delivery quality, driver performance, customer impact, and the action plan with projected savings.
+**[Access the interactive dashboard →](https://app.powerbi.com/view?r=eyJrIjoiNTVjODY2MWQtYWZlMC00ODM0LTgyODQtZTcyMDdjOGVjYzNjIiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9)**
 
-**To open:** Power BI Desktop → File → Open → select the `.pbix` file.
+5 pages covering executive overview, delivery quality, driver performance, customer impact, and the action plan with projected savings. No login required.
 
-The CSVs in `data/powerbi/` are the pre-built star schema used by the report. The `POWERBI_GUIDE.md` file documents the data model relationships and all DAX measures used.
+The file `dashboard/walmart-delivery-analytics.pbix` is also included for local use in Power BI Desktop. The CSVs in `data/powerbi/` are the pre-built star schema used by the report — see `POWERBI_GUIDE.md` for the data model and DAX measures.
 
 ---
 
