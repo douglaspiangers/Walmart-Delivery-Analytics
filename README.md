@@ -1,14 +1,16 @@
 # Walmart Delivery Analytics
 
-Analysis of delivery failures in a grocery operation covering 7 cities in the Orlando, FL area. The goal was to figure out what's driving missing items in deliveries — and whether the problem sits with the drivers or the customers.
+End-to-end analysis of delivery failures for a grocery delivery operation running across 7 delivery regions in the Orlando, FL metro area, including Altamonte Springs and Sanford. Every missing-item delivery drives customer complaints, redelivery costs and, eventually, customer churn, so the business needed a data-driven answer to a simple but expensive question: is this an operational problem, or a customer behavior problem?
+
+The analysis works through the full pipeline: data profiling and cleaning, exploratory analysis, statistical hypothesis testing, causal modelling (Random Forest plus SHAP) to isolate what actually drives failures, customer and driver segmentation, driver cohort analysis, and a customer retention and churn study, closing with a quantified executive conclusion and action plan.
 
 ---
 
 ## The Problem
 
-10,000 orders processed in 2023. $2.83M in revenue. And 15% of deliveries arrived with at least one missing item — generating customer complaints, redelivery costs, and churn.
+10,000 orders processed in 2023 across 5 core tables (orders, customers, drivers, order items and products). Total revenue of $2.83M, and 15% of deliveries arrived with at least one missing item, generating customer complaints, redelivery costs and churn.
 
-The central question: is this an operational problem or a customer behavior problem?
+The central question: is this an operational problem, or a customer behavior problem?
 
 ---
 
@@ -34,54 +36,38 @@ The driver explains 19× more than the customer. The problem is operational.
 
 ---
 
-## Recommendations
-
-**1. Driver retraining program**
-Mandatory retraining for drivers with a failure rate above 20% over at least 20 deliveries. Expected impact: roughly $32k/year in recovered costs.
-
-**2. Monday reinforcement**
-Monday consistently shows the highest failure rate (16.1%). Additional QA checks and a mandatory double-check protocol for Monday dispatches.
-
-**3. Regional audit — Altamonte Springs**
-16.2% failure rate, the highest in the network. On-site process audit comparing operations with Sanford (13.9%, the best-performing region).
-
-**4. Checklist for large orders**
-Digital checklist required for orders above $400 or with more than 12 items.
-
----
-
 ## Project Structure
 
 ```
 walmart-delivery-analytics/
 ├── data/
-│   ├── raw/                    # Original CSV files (5 tables)
-│   ├── processed/              # Cleaned Parquet files + shap_results.json
-│   └── powerbi/                # Star-schema CSVs for Power BI (13 files)
+│ ├── raw/ # Original CSV files (5 tables)
+│ ├── processed/ # Cleaned Parquet files + shap_results.json
+│ └── powerbi/ # Star-schema CSVs for Power BI (13 files)
 ├── notebooks/
-│   ├── 01_data_profiling.ipynb
-│   ├── 02_data_cleaning.ipynb
-│   ├── 03_exploratory_analysis.ipynb
-│   ├── 04_business_insights.ipynb
-│   ├── 05_delivery_quality_analysis.ipynb
-│   ├── 07_causal_analysis.ipynb
-│   ├── 08_segmentation.ipynb
-│   ├── 09_driver_cohort_analysis.ipynb
-│   ├── 10_customer_retention_analysis.ipynb
-│   └── 11_executive_conclusion.ipynb
+│ ├── 01_data_profiling.ipynb
+│ ├── 02_data_cleaning.ipynb
+│ ├── 03_exploratory_analysis.ipynb
+│ ├── 04_business_insights.ipynb
+│ ├── 05_delivery_quality_analysis.ipynb
+│ ├── 07_causal_analysis.ipynb
+│ ├── 08_segmentation.ipynb
+│ ├── 09_driver_cohort_analysis.ipynb
+│ ├── 10_customer_retention_analysis.ipynb
+│ └── 11_executive_conclusion.ipynb
 ├── src/
-│   ├── data_loader.py
-│   ├── preprocessing.py
-│   └── visualization.py
+│ ├── data_loader.py
+│ ├── preprocessing.py
+│ └── visualization.py
 ├── dashboard/
-│   ├── dashboard.py                         # Plotly Dash app (4 tabs)
-│   └── walmart-delivery-analytics.pbix      # Power BI report (5 pages)
-├── reports/figures/                         # Exported PNG charts
-├── sql/                                     # SQL scripts
-├── run_analysis.py                          # Full pipeline script
-├── run_shap_export.py                       # SHAP export without Jupyter
-├── export_powerbi.py                        # Generates star-schema CSVs
-├── POWERBI_GUIDE.md                         # Data model and DAX reference
+│ ├── dashboard.py # Plotly Dash app (4 tabs)
+│ └── walmart-delivery-analytics.pbix # Power BI report (5 pages)
+├── reports/figures/ # Exported PNG charts
+├── sql/ # SQL scripts
+├── run_analysis.py # Full pipeline script
+├── run_shap_export.py # SHAP export without Jupyter
+├── export_powerbi.py # Generates star-schema CSVs
+├── POWERBI_GUIDE.md # Data model and DAX reference
 └── requirements.txt
 ```
 
@@ -170,5 +156,24 @@ Python 3.14 · Pandas 3.0 · Scikit-Learn · SHAP · SciPy · Plotly Dash · Mat
 
 ---
 
-**Douglas Piangers** · Data Scientist  
+## Recommendations
+
+**1. Driver retraining program**
+Mandatory retraining for drivers with a failure rate above 20% over at least 20 deliveries. Driver behavior is the single largest factor behind delivery failures, so this is the highest-leverage intervention available. Expected impact: roughly $32k/year in recovered costs.
+
+**2. Digital checklist for large orders**
+Required for orders above $400 or with more than 12 items. Order complexity is the next most relevant factor behind driver behavior, and a mandatory checklist targets that risk before dispatch.
+
+**3. Monday reinforcement**
+Monday consistently shows the highest failure rate (16.1%). Additional QA checks and a mandatory double-check protocol for Monday dispatches address this recurring temporal pattern.
+
+**4. Regional audit — Altamonte Springs**
+16.2% failure rate, the highest in the network. On-site process audit comparing operations with Sanford (13.9%, the best-performing region) should surface what's operationally different between the two.
+
+**5. Compensation protocol after first failure**
+$47,371 in revenue is at risk from customers who churn after a single delivery failure (7.8% of affected customers leave for good). A structured compensation or recovery protocol triggered right after a customer's first failure could retain a meaningful share of that at-risk revenue.
+
+---
+
+**Douglas Piangers** · Data Scientist
 [GitHub](https://github.com/douglaspiangers) · [LinkedIn](https://linkedin.com/in/douglaspiangers)
